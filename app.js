@@ -8,6 +8,9 @@ var session = require('express-session');
 var passport = require('passport');
 var flash    = require('connect-flash');
 var morgan   = require('morgan');
+const knexConfig = require('./config/knexfile')
+const Knex = require('knex');
+const { Model } = require('objection');
 require('dotenv').config();
 
 // Routers
@@ -17,6 +20,9 @@ var coolRouter  = require('./routes/cool');
 var apiRouter   = require('./routes/api');
 var app = express();
 
+// initialize sqlite database
+const knex = Knex(knexConfig.development);
+Model.knex(knex);
 //connect to db
 /*mongoose.connect(process.env.DB_URL,function(err, db){ 
   useNewUrlParser: true
